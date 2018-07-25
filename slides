@@ -1,0 +1,333 @@
+Slide #1
+What Is React?
+React is a declarative, efficient, and flexible JavaScript library for building user interfaces. It lets you compose complex UIs from small and isolated pieces of code called “components”.
+
+
+What makes React different?
+
+1. Components, not templates
+2. Re-render on update
+3. Virtual DOM (and events)
+
+
+1. Components, not templates
+Separation of concerns:
+Reduce coupling, increase cohesion.
+
+
+Coupling is:
+“The degree to which each program module relies on each of the other modules.”
+http://en.wikipedia.org/wiki/Coupling_(computer_science)
+
+Cohesion is:
+“The degree to which elements of a module belong together.”
+http://en.wikipedia.org/wiki/Cohesion_(computer_science)
+
+
+
+
+
+“View model” tightly couples template to
+display logic.
+[{“price”: “7.99”, “product”: “Back
+scratcher”, “tableRowColor”: “rgba(0, 0, 0,
+0.5)”}]
+
+
+Templates separate technologies, not concerns
+its mustache, hammerjs, haml, jade
+
+React components are loosely coupled and highly cohesive
+
+
+
+- React has a virtual DOM (and events system).
+  Optimized for performance and memory footprint
+
+
+
+
+
+
+React components are loosely coupled and highly cohesive
+
+
+
+
+
+Re-render on every change
+Data changing over time is the root of all evil.
+Re-rendering on every change makes things simple.
+	Every place data is displayed is guaranteed to be up-to-date.
+	No magical data binding.
+	No model dirty checking.
+	No more explicit DOM operations – everything is declarative.
+
+
+
+
+
+
+
+Virtual DOM
+On every update…
+• React builds a new virtual DOM
+subtree
+• …diffs it with the old one
+• …computes the minimal set of DOM
+mutations and puts them in a queue
+• …and batch executes all updates
+
+
+It’s fast!
+Because the DOM is slow!
+Computes minimal DOM operations
+Batched reads and writes for optimal DOM performance
+Usually faster than manual DOM operations
+Automatic top-level event delegation (with cross-browser HTML5 events)
+Can do all this at 60fps, even in a (non-JIT) UIWebView on the iPhone.
+
+Why Should YOU Use React?
+• Can be used for parts of your application
+• Plays well with other libraries and technologies
+(meteor, rails, node)
+• Components allow you to split work easily
+
+===========================
+WTF Is React?
+Do we really need another framework??
+
+First off, React is not a JavaScript framework. It's simply a JavaScript library that helps you build modular UI. That's all.
+
+No routes.
+
+No controllers.
+
+Just good ol' views.
+
+React's basic philosophy is that components trigger events (e.g. after a name is input into a field). That event can then be listened to by a model. The model can then trigger an event (e.g., name updated), and then the view can respond to the model's event to re-render.
+
+Events flow out/up, data flows in/down.
+
+So Will It Replace Angular?
+Uh, no. Comparing React to Angular is like comparing Bootstrap to Ember. Again, React is just a UI library for building components.
+
+Since React only represents the "V"** in MVC, you could potentially use React as the view layer in Angular.
+
+**Well, actually, some could argue that complex UI views in React also act as a "C", but this is more like the concept of a "Presenter" -- a presenter is basically a root view that controls sub views -- think of it as a "view controller".
+
+What Are The Pros?
+Data travels down. In short, this has the same benefit as dependency injection in object-oriented development.
+
+Virtual DOM means the UI only updates when it is actually changed. This leads to super fast rendering times.
+
+Awesome garbage collection, memory usage and performance (https://auth0.com/blog/2016/01/07/more-benchmarks-virtual-dom-vs-angular-12-vs-mithril-js-vs-the-rest/#results-link)
+
+Can render a lot of frames per second
+
+You can render your views on both the server and the client. No more rendering with PhantomJS and serving that up to search engines like you would have to do with a client-only rendering system like Angular's view layer. Yuck.
+
+Makes modifying and reusing UI components super easy
+
+Backed by Facebook (and powering their site), so not likely to disappear anytime soon
+
+Even though it's still not at 1.0 release, it is already in production use by Facebook, Netflix, Airbnb, Yahoo
+
+Big community online
+
+As it is not a framework, it can be used with other frameworks and libraries such as Angular, jQuery, Backbone, Vue, etc
+
+What Are The Cons?
+Again, React is only concerned about the view. There is nothing related to data modelling or routing, etc. If you're looking for a golden hammer to solve all of your JavaScript woes, React is not the answer.
+
+Because it is only concerned with the view layer, it means gluing the other parts has been a bit chaotic during early adoption. It doesn't come bundled with an event framework, so a lot of people have reinvented the wheel there.
+
+React is a large library for not being a framework
+
+Documentation is not the best, so the learning curve can be steep. Not something you want to roll out for a large new project -- best to start practicing with it on side projects.
+
+The problem with trying to learn React is that there are so many other web technologies that are usually combined with it that, if you are not familiar with those technologies, you can easily get lost of all of the new and shiny
+
+No native support for IE8 or below
+
+React Speak
+Components. Think of these as custom HTML elements.
+
+<code>
+
+<VideoPlayer startAtFrame="30"/>, <LikeButton likes="100"> or <Login>
+
+</code>
+
+Follow Single Responsibility here: each component does one thing and one thing well -- several smaller components are better than one big monolithic component
+
+E.g. Don't build a list and the ajax call to fetch that list data in the same component -- first build the list component and then use that component inside the data fetcher. A good example of this is shown here.
+
+Just like when refactoring functions -- if a function does more than one thing, you break it down until it does only one thing -- do this same thing with components
+
+Props: Initialize component state
+
+These are declarative attributes of a component. Think of these in the same way you would think of things like 'src', 'width' and 'height' on an '' element. Another way to think of this is the component's config options. This is injected into the component: "data travels down". These are immutable -- set once during initialization, and not changed. If you need to change these values, that is handled with State (see below).
+
+Accessible via this.props in the component
+
+E.g., if we have a "startAtFrame" variable, it would be in this.props.startAtFrame
+
+Think of props as the "public" data that you can set
+
+PropTypes: Allows your properties to be strictly typed.
+
+<code>
+
+const ListOfNumbers = props => (
+ <ol className={props.className}>
+   {
+     props.numbers.map(number => (
+       <li>{number}</li>)
+     )
+   }
+ </ol>
+);
+
+ListOfNumbers.propTypes = {
+ className: React.PropTypes.string.isRequired,
+ numbers: React.PropTypes.arrayOf(React.PropTypes.number)
+};
+</code>
+
+Events: used to communicate updates and changes to a component
+
+React wraps native browser events to given them a standard interface
+
+More info on the types of events available are available here: https://facebook.github.io/react/docs/events.html
+
+State: Mutable data of a component.
+
+Accessible via this.state in the component
+
+If you "like" a photo, that photo's state now changes to "liked"
+
+Managing state can get complicated. Rather than reinvent the wheel, it's best to start off with a community supported library, such as Redux, which was based on Facebook's Flux theory for state management. Here is a cartoon intro to Redux that helps explain it.
+
+Think of state as "private" data that only the component can set
+
+You will typically have a root component, such as <App>, that will act as your view presenter (or view controller). This container component manages state by pushing data down, in reaction to events that have flown up.
+
+JSX
+JSX is the part inside the render() function that looks like HTML. This was done to allow you create components in the way you would think of them like in HTML.
+
+Some tips:
+
+Do not use class. Instead, use className. It's because JSX gets translated to JS, and class is a keyword in the newest version of JS.
+
+If you use <code><br></code> instead of <code><br/></code>
+
+, it won't work. Make sure to use self-closing tags.
+
+JSX is not required, but is widely used.
+
+React Native
+https://facebook.github.io/react-native/
+
+Allows you to use React to build mobile apps
+
+Redux
+Redux helps to manage how components interact with one another
+
+Components are given callback functions which are called whenever a UI Event happens
+
+The callback functions create and dispatch Actions based on the Event
+
+Reducers process the Actions, computing the new State
+
+oldState + Action = newState
+
+Components receive the new State as props and re-render if needed
+
+Redux makes it much easier to test transitions between states
+
+Helps to reduce framework lock-in, since all the components have to do is receive new props (data flows in) and emit events (events flow out)
+
+Immutable.Js
+This library can be used to manage state for components. It ensures that, once set, the data cannot be changed.
+
+Some Tips
+Keep components small -- follow The Single Responsibility Theory here -- just like functions and classes, you want your components to do one thing and do it really well
+
+Easier to understand
+
+Easier to share
+
+Easier to reuse
+
+<code>
+
+const LatestPostsComponent = props => (
+ <section>
+   <div><h1>Latest posts</h1></div>
+   <div>
+     { props.posts.map(post => <PostPreview key={post.slug} post={post}/>) }
+   </div>
+ </section>
+);
+
+</code>
+
+
+Keep components free of state unless absolutely necessary
+
+Do not place any business logic in components. That belongs on the domain model on the server. Only rendering logic should be handled in the components.
+
+Warning signs include:
+
+Validation
+
+Calculations
+
+All The Links
+Ye Olde Cheat Sheet: http://reactcheatsheet.com/
+
+Best Practices:
+
+https://blog.risingstack.com/react-js-best-practices-for-2016/
+
+https://github.com/planningcenter/react-patterns
+
+http://brewhouse.io/blog/2015/03/24/best-practices-for-component-state-in-reactjs.html
+
+React for jQuery Users: http://reactfordesigners.com/labs/reactjs-introduction-for-people-who-know-just-enough-jquery-to-get-by/
+
+Intro to React: https://blog.risingstack.com/the-react-way-getting-started-tutorial/
+
+Quick start guide: http://www.jackcallister.com/2015/01/05/the-react-quick-start-guide.html
+
+http://developer.telerik.com/featured/5-steps-for-learning-react-application-development/
+
+Great general overview of React: http://blog.andrewray.me/reactjs-for-stupid-people/
+
+Structuring React Components: http://tusharm.com/articles/structuring-react-components/
+
+Dumb vs Smart Components: https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.50yne2ohp
+
+In-depth overview of the problems React solves (warning: long read): http://jlongster.com/Removing-User-Interface-Complexity,-or-Why-React-is-Awesome
+
+A list of components being built in the React community: https://react.rocks/
+
+http://wix.github.io/react-templates/
+
+https://camjackson.net/post/9-things-every-reactjs-beginner-should-know
+
+http://tylermcginnis.com/reactjs-tutorial-a-comprehensive-guide-to-building-apps-with-react/
+
+Aaaaaand.. a little humor ;) http://swizec.com/blog/reactflux-can-do-in-just-137-lines-what-jquery-can-do-in-10/swizec/6740
+
+http://blog.zigomir.com/react.js/jquery/2015/01/11/jquery-versus-react-thinking.html
+
+Redux Links
+https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6#.njz9abheu
+
+Redux best practices: https://medium.com/lexical-labs-engineering/redux-best-practices-64d59775802e#.7oowaja79
+
+https://medium.com/@sapegin/react-and-redux-single-page-applications-resources-22cd859b0c1d#.pnqa8vjom
+
+
